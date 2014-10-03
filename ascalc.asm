@@ -127,7 +127,7 @@ add:
 	sub	eax,'0'		; convert num1 from ascii to decimal
 	sub	ebx,'0'		; convert num2 from ascii to decimal
 
-	add	eax,ebx		; add num2 to num1, storing result in num1
+	add	eax,ebx		; add num2 to num1, storing result in eax
 
 	add	eax,'0'		; convert from decimal to ascii
 
@@ -153,6 +153,33 @@ add:
 	int	0x80
 
 subtract:
+	mov	eax,[num1]	; store first number in eax
+	mov	ebx,[num2]	; store second number in ebx
+
+	sub	eax,'0'		; convert num1 from ascii to decimal
+	sub	ebx,'0'		; convert num2 from ascii to decimal
+
+	sub	eax,ebx		; subtract ebx from eax, storing result in eax
+
+	add	eax,'0'		; convert from ascii to decimal
+
+	mov	[ans],eax	; move result in eax to ans
+
+	; print msgans
+	mov	eax,4		; sys_write
+	mov	ebx,1		; stdout
+	mov	ecx,msgans
+	mov	edx,lmsgans
+	int	0x80
+
+	; print ans
+	mov	eax,4		; sys_write
+	mov	ebx,1		; stdout
+	mov	ecx,ans
+	mov	edx,8
+	int	0x80
+
+	; exit program
 	mov	eax,1		; sys_exit
 	mov	ebx,0
 	int	0x80
